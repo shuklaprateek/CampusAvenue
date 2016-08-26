@@ -1,0 +1,194 @@
+
+<html>
+<head>
+<title>CampusAvenue</title>
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="Assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<script src="Assets/js/jquery.js"></script>
+<script src="Assets/js/Sign_Up_Val.js"></script>
+</head>
+<body>
+<div id="wrapper-gradiant">
+<div id="wrapper-bgshadow">
+		<div id="wrapper">
+<div id="header-wrapper">
+	<div id="header">
+		<div id="logo">
+					<center><h1><a href=""><font color="#F0FAFA">C</font><font color="#F0FAFA">ampus</font><font color="#F0FAFA">A</font><font color="#F0FAFA">venue</font></a></h1></center>
+
+
+				</div>
+	</div>
+</div>
+
+<div id="banner-wrapper">
+	<div id="banner">
+		<div class="image"><a href=""><img src="images/d.jpg" width="900" height="257" alt="" /></a></div>
+		<div class="border"></div>
+	</div>
+</div>
+<div id="page">
+	<div class="bgtop"></div>
+	<div class="content-bg">
+		<div id="content">
+			<div class="post">
+				<p class="date"><b></b></p>
+				<h2 class="title">Sign up</h2>
+
+<div class="entry">
+<form name="my" action="Sign_Up_Submit.php" method="post" enctype="multipart/form-data" >
+
+<table >
+<tr><td>Name</td><td><input type=text name="nm" id="nm" placeholder="eg: John Smith" onkeyup="NAME();" required><br><span id="nmsg"></span></td></tr>
+
+<tr>
+<td>Gender</td>
+<td>
+<select name="gd" id="gd">
+<option value="-Select-">-Select-</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+<br>
+<span id="gmsg"></span>
+</td>
+</tr>
+
+<tr><td>Contact No.</td><td><input type=text name="cn" id="cn" placeholder="contact no." onkeyup="Contact();cot();" onchange="Cont();" required><br><span id="cmsg"></span></td></tr>
+
+
+<tr><td>E-Mail Id</td><td><input type="email" name="em" id="em" placeholder="abc@xyz.com" onkeyup="Username();Email();" required><br><span id="emsg"></span></td></tr>
+
+<tr><td>User Name</td><td><select name="unm" id="unm"></select><span id="umsg"></span></td></tr>
+
+<tr><td>Password</td><td><input type=password name="pwd" id="pwd" placeholder="password" onchange='Passe();' required></td></tr>
+
+<tr><td>Confirm Password</td><td><input type=password name="cpwd" id="cpwd" placeholder="retype password" required><span id="pmsg"></span></td></tr>
+
+<tr><td>Profile Image</td><td><input type="file" name="fileToUpload" id="fileToUpload"></td></tr>
+
+<tr><td></td><td><input type=submit class="btn btn-default" name="sb" id="sb" onclick="Mf();"></td></tr>
+
+
+</table>
+</form>
+<script>
+$(function(){
+$('#em').change(function(){
+var str=$('#unm').val();
+$.ajax({
+url:'Username_Check.php',
+datatype:'json',
+type:'POST',
+data:{"dt":str},
+success:function(dt){
+if(dt=='true')
+{
+document.getElementById("umsg").innerHTML="";
+document.getElementById("umsg").innerHTML="<font color=red>Sorry This Username Already Exist</font>";
+$('#em').keyup(function(){
+document.getElementById("umsg").innerHTML="";
+});
+$('#em').val('');
+$('#unm').val('');
+document.getElementById("sb").disabled=true;
+}
+else
+{
+document.getElementById("umsg").innerHTML="";
+document.getElementById("sb").disabled=false;
+}
+},
+error:function(){
+console.log("Something Wrong");
+}
+});
+});
+$('#cpwd').change(function(){
+if($('#pwd').val()!=$('#cpwd').val())
+{
+document.getElementById("pmsg").innerHTML="";
+document.getElementById("pmsg").innerHTML="<font color=red>password do not match</font>";
+$('#pwd').keyup(function(){
+document.getElementById("pmsg").innerHTML="";
+});
+$('#pwd').val('');
+$('#cpwd').val('');
+document.getElementById("sb").disabled=true;
+}
+else
+{
+document.getElementById("pmsg").innerHTML="";
+document.getElementById("sb").disabled=false;
+}
+
+});
+});
+</script>
+		</div>
+				</div>
+			</div>
+
+
+
+
+	<div id="sidebar">
+	<div>
+	<h2 class="title">Sign in</h2>
+	<table>
+	<tr><td>Username</td><td><input type=text id="usnm" placeholder="username"></td></tr>
+
+	<tr><td>Password</td><td><input type=password id="pswd" placeholder="Password"></td></tr>
+
+	<tr><td></td><td><input type=button id="btn" value="Sign In"></td></tr>
+
+	</table>
+	<br><br><br>
+	<h4><a href="aboutus.html">About Us</a></h4>
+	  <h4><a href="contactus.html">Contact Us</a></h4>
+	<script>
+	$(function(){
+	$('#btn').click(function(){
+	if($('#usnm').val()=="")
+	{
+	alert("Please Enter Email Id");
+	}
+	else
+	if($('#pswd').val()=="")
+	{
+	alert("Please Enter Password");
+	}
+	else
+	{
+	var str=$('#usnm').val()+"~"+$('#pswd').val();
+
+	$.ajax({
+	url:'Login_Submit.php',
+	datatype:'json',
+	type:'post',
+	data:{"str":str},
+	success:function(dt){
+	if(dt=='true')
+	{
+	window.location.href="Home.php";
+	}
+	else
+	{
+	alert("Your Email Id or Password is wrong");
+	}
+	},
+	error:function(){
+	alert("something  Is Wrong");
+	}
+	})
+	}
+	});
+	});
+</script>
+	</div>
+	</div>
+
+		</div>
+			</div>
+	</body>
+</html>
